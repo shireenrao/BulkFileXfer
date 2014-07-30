@@ -67,6 +67,7 @@ print 'FORMAT    :', options.file_format
 print 'REMAINING :', remainder
 source_file_or_dir = options.source
 target_dir = options.target
+filelist = option.filelist
 
 if not os.path.exists(source_file_or_dir):
     print "ERROR: %s is not a valid file or directory" % source_file_or_dir
@@ -76,4 +77,19 @@ if not os.path.isdir(target_dir):
     print "ERROR: %s is not a valid directory" % target_dir
     sys.exit(1)
 
+if os.path.isdir(source_file_or_dir):
+    source_list = [os.path.join(source_file_or_dir, file_format % a_file) for
+                   a_file in filelist]
 
+finalresult = True
+for source in source_list:
+    result = False
+    result = processfile(copyfile, source, target_dir)
+    finalresult = finalresult and result
+
+if finalresult:
+    print 'Success'
+    sys.exit(0)
+else:
+    print 'Failure'
+    sys.exit(1)
