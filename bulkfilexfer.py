@@ -14,6 +14,25 @@ def list_callback(option, opt, value, parser):
     setattr(parser.values, option.dest, value.split(','))
 
 
+def processfile(copy_flag, src, dest):
+    return_flag = False
+    action = 'cp' if copy_flag else 'mv'
+    if os.path.isfile(src):
+        try:
+            a_command = action + ' %s %s' % (src, dest)
+            print a_command
+            os.system(a_command)
+            print 'done'
+            return_flag = True
+        except OSError as esc:
+            print 'ERROR: %s %s %s' % (action, src, dest)
+            print 'Error: %s:%s' % (esc.errno, esc.message)
+    else:
+        print 'File %s not found' % src
+
+    return return_flag
+
+
 parser = optparse.OptionParser()
 parser.add_option('-c',
                   action="store_true",
