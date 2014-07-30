@@ -3,6 +3,17 @@
 Create on July 29, 2014
 
 Created by: @shireenrao
+
+Usage: bulkfilexfer.py [options]
+
+Options:
+  -h, --help      show this help message and exit
+  -c              Set Flag to copy file. Default is Move
+  -s SOURCE       Source File or Directory
+  -t TARGET       Target Directory
+  -l FILELIST     Comma separated list of Base filenames
+  -f FILE_FORMAT  File Format string where filelist will used
+
 '''
 
 import optparse
