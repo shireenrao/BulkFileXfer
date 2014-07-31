@@ -70,15 +70,16 @@ parser.add_option('-f',
                   help="File Format string where filelist will used")
 
 options, remainder = parser.parse_args()
-print 'COPY      :', options.copyfile
-print 'SOURCE    :', options.source
-print 'TARGET    :', options.target
-print 'LIST      :', options.filelist
-print 'FORMAT    :', options.file_format
-print 'REMAINING :', remainder
 source_file_or_dir = options.source
 target_dir = options.target
-filelist = option.filelist
+filelist = options.filelist
+file_format = options.file_format
+copyfile = options.copyfile
+
+if (options.source is None or options.target is None
+   or options.filelist is None or options.file_format is None):
+    parser.print_help()
+    sys.exit(1)
 
 if not os.path.exists(source_file_or_dir):
     print "ERROR: %s is not a valid file or directory" % source_file_or_dir
@@ -87,6 +88,13 @@ if not os.path.exists(source_file_or_dir):
 if not os.path.isdir(target_dir):
     print "ERROR: %s is not a valid directory" % target_dir
     sys.exit(1)
+
+print 'COPY      :', options.copyfile
+print 'SOURCE    :', options.source
+print 'TARGET    :', options.target
+print 'LIST      :', options.filelist
+print 'FORMAT    :', options.file_format
+print 'REMAINING :', remainder
 
 if os.path.isdir(source_file_or_dir):
     source_list = [os.path.join(source_file_or_dir, file_format % a_file) for
